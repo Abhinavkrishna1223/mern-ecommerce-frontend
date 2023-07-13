@@ -1,7 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectCount,
-} from './cartSlice';
 import { Fragment, useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
@@ -34,10 +31,10 @@ const products = [
 ]
 
 export function Cart() {
-  const count = useSelector(selectCount);
+ 
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
 
 
   return (
