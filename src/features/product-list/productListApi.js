@@ -4,6 +4,17 @@ export function fetchAllProduct() {
   return axios.get('  http://localhost:8080/products');
 }
 
+export function fetchProductById(id) {
+  return new Promise(async(resolve) => {
+    const response = await fetch(`http://localhost:8080/products/${id}`)
+    const data = await response.json();
+    
+    console.log(data.images, 'Id data')
+
+    resolve({data})
+  })
+}
+
 
 //Filtering in Product List //
 export function fetchProductsByFilter({filter, sort, pagination}) {

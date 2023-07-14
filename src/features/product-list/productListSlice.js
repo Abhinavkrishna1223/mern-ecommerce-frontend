@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllBrands, fetchAllCategories, fetchAllProduct, fetchProductsByFilter } from './productListApi';
+import { fetchAllBrands, fetchAllCategories, fetchAllProduct, fetchProductById, fetchProductsByFilter } from './productListApi';
 
 const initialState = {
   products: [],
@@ -7,6 +7,7 @@ const initialState = {
   categories:[],
   status: 'idle',
   totalItems:0,
+  selectedProduct:null
 };
 
 
@@ -17,6 +18,15 @@ export const fetchAllProductAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchProductByIdAsync = createAsyncThunk(
+  'products/fetchProductById',
+  async (id) => {
+    const response = await fetchProductById(id);
+    return response.data;
+  }
+);
+
 
 //For filtering the Items
 export const fetchProductsByFilterAsync = createAsyncThunk(
@@ -42,6 +52,8 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+
 
 
 
@@ -86,6 +98,13 @@ export const productSlice = createSlice({
       .addCase(fetchAllCategoriesAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.categories = action.payload;
+      })
+      .addCase(fetchProductByIdAsync.pending, (state) => {
+        state.status = 'loading-Id';
+      })
+      .addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.selectedProduct = action.payload;
       })
   },
 });
