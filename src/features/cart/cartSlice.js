@@ -1,46 +1,45 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './cartAPI';
+import { addToCart } from './cartAPI';
+
 
 const initialState = {
-  value: 0,
+  items: [],
   status: 'idle',
 };
 
 
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
+export const addToCartAsync = createAsyncThunk(
+  'cart/addToCart',
+  async (items) => {
+    const response = await addToCart(items);
     return response.data;
   }
 );
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const cartSlice = createSlice({
+  name: 'cart',
   initialState,
   
   reducers: {
-    increment: (state) => {
-    
-      state.value += 1;
-    }
+   
   },
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
+      .addCase(addToCartAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
+      .addCase(addToCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.value += action.payload;
+        console.log('here', action);
+        state.items.push(action.payload);
+        return state;
       });
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { increment, decrement, incrementByAmount } = cartSlice.actions;
 
 
-export const selectCount = (state) => state.counter.value;
 
 
-export default counterSlice.reducer;
+export default cartSlice.reducer;

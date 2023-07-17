@@ -10,32 +10,42 @@ import {
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import Protected from './features/auth/Protected';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (<Home/>),
+    element: (
+      <Home />
+   ),
   },
   {
     path: "/login",
-    element: (<LoginPage/>),
+    element: (
+      <LoginPage />),
   },
   {
     path: "/signup",
-    element: (<SignupPage/>),
+    element: (
+      <SignupPage />
+   ),
   },
   {
     path: "/cart",
-    element: (<CartPage/>),
+    element: (
+      <CartPage />
+   ),
   },
   {
     path: "/checkout",
-    element: (<Checkout/>),
+    element: (<Checkout />),
   },
   {
     path: "/product-details/:id",
-    element: (<ProductDetailsPage/>),
+    element: (
+      <ProductDetailsPage />
+   ),
   },
 ]);
 
