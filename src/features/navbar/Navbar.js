@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const user = {
   name: 'Tom Cook',
@@ -27,6 +28,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar({children}) {
+
+  const items = useSelector((state)=> state.cart.items);
+
   return (
     <>
 
@@ -78,6 +82,12 @@ export default function Navbar({children}) {
                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                       </Link>
+
+                      {items.length > 0 && (
+                        <span className="inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                          {items.length}
+                        </span>
+                      )}
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -164,9 +174,15 @@ export default function Navbar({children}) {
                       className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="sr-only">View notifications</span>
-                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true"  />
                     </button>
                     </Link>
+
+                    {items.length > 0 && (
+                        <span className="inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                          {items.length}
+                        </span>
+                      )}
 
 
                   </div>

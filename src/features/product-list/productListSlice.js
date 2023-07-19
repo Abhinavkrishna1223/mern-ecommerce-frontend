@@ -45,6 +45,7 @@ export const fetchAllBrandsAsync = createAsyncThunk(
   }
 );
 
+
 export const fetchAllCategoriesAsync = createAsyncThunk(
   'products/fetchAllCategories',
   async () => {

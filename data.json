@@ -656,32 +656,20 @@
   ],
   "cart": [
     {
-      "id": 5,
-      "title": "Huawei P30",
-      "brand": "Huawei",
-      "price": 499,
-      "thumbnail": "https://i.dummyjson.com/data/products/5/thumbnail.jpg"
+      "id": 10,
+      "title": "HP Pavilion 15-DK1056WM",
+      "brand": "HP Pavilion",
+      "price": 1099,
+      "thumbnail": "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+      "quantity": 4
     },
     {
-      "id": 1,
-      "title": "iPhone 9",
+      "id": 2,
+      "title": "iPhone X",
       "brand": "Apple",
-      "price": 549,
-      "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-    },
-    {
-      "id": 6,
-      "title": "MacBook Pro",
-      "brand": "Apple",
-      "price": 1749,
-      "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png"
-    },
-    {
-      "id": 12,
-      "title": "Brown Perfume",
-      "brand": "Royal_Mirage",
-      "price": 40,
-      "thumbnail": "https://i.dummyjson.com/data/products/12/thumbnail.jpg"
+      "price": 899,
+      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+      "quantity": 2
     }
   ]
 }
