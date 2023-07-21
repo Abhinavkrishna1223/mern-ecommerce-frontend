@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,9 @@ function Login() {
   const dispatch = useDispatch();
 
   const ApiError = useSelector((state) => state.auth.error);
+  const user =  useSelector((state)=> state.auth.logUser)
+
+  console.log(ApiError);
 
   const userSchema = yup.object({
     email: yup.string().email('Invalid Email Format').required('Email is required'),
@@ -33,7 +36,7 @@ function Login() {
 
   const onSubmit = (data) => {
 
-    dispatch(loginUserAsync(data))
+    dispatch(loginUserAsync({email: data.email, password: data.password}))
     console.log(data)
   }
 
@@ -41,6 +44,7 @@ function Login() {
 
   return (
     <div>
+      {user ? <Navigate to="/" replace={true} ></Navigate> : <Navigate to="/login" replace={true} ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

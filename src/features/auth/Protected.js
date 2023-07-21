@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 function Protected({children}) {
 
-    const user = useSelector((state)=> state.auth.user);
+    const user = useSelector((state)=> state.auth.logUser);
 
     
 
@@ -12,7 +12,7 @@ function Protected({children}) {
       return <Navigate to='/login'></Navigate>
     }
 
-  return( children );
+  return children ;
 }
 
 export default Protected

@@ -637,32 +637,10 @@
       "checked": false
     }
   ],
-  "users": [
-    {
-      "email": "abhinav@metaversitytechnologies.com",
-      "password": "11223",
-      "id": 1
-    },
-    {
-      "email": "ugtygv@jj.com",
-      "password": "123456",
-      "id": 2
-    },
-    {
-      "email": "akthakur456at@gmail.com",
-      "password": "112233",
-      "id": 3
-    }
+  "user": [
+
   ],
   "cart": [
-    {
-      "id": 10,
-      "title": "HP Pavilion 15-DK1056WM",
-      "brand": "HP Pavilion",
-      "price": 1099,
-      "thumbnail": "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
-      "quantity": 4
-    },
     {
       "id": 2,
       "title": "iPhone X",
@@ -670,6 +648,73 @@
       "price": 899,
       "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
       "quantity": 2
+    },
+    {
+      "id": 6,
+      "title": "MacBook Pro",
+      "brand": "Apple",
+      "price": 1749,
+      "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
+      "quantity": 1
+    }
+  ],
+  "orders": [
+    {
+      "user": [
+        {
+          "0": {
+            "email": "abhinav@metaversitytechnologies.com",
+            "password": "12345",
+            "addresses": [
+              {
+                "name": "Mukesh",
+                "email": "abhinav@metaversitytechnologies.com",
+                "phone": "+449650335313",
+                "streetAddress": "Sector 24",
+                "city": "Faridabad",
+                "state": "Haryana",
+                "postalCode": "121005"
+              }
+            ],
+            "id": 1
+          },
+          "addresses": [
+            {
+              "name": "Abhinav",
+              "email": "abhinav@metaversitytechnologies.com",
+              "phone": "+449650335313",
+              "streetAddress": "Sector-23a near NIMS Hospital",
+              "city": "Faridabad",
+              "state": "Haryana",
+              "postalCode": "121005"
+            }
+          ],
+          "id": 1
+        }
+      ],
+      "cartProducts": [
+        {
+          "id": 2,
+          "title": "iPhone X",
+          "brand": "Apple",
+          "price": 899,
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "quantity": 2
+        },
+        {
+          "id": 6,
+          "title": "MacBook Pro",
+          "brand": "Apple",
+          "price": 1749,
+          "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
+          "quantity": 3
+        }
+      ],
+      "totalAmount": 7045,
+      "totalQuantity": 5,
+      "paymentMethod": "cash",
+      "selectedAddress": null,
+      "id": 1
     }
   ]
 }

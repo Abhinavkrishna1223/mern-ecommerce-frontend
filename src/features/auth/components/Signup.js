@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,8 @@ function Signup() {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.logUser);
+  console.log({user}, 'user');
 
   const userSchema = yup.object({
     email: yup.string().email('Invalid Email Format').required('Email is required'),
@@ -36,7 +37,7 @@ function Signup() {
 
   const onSubmit = (data) => {
 
-    dispatch(createUserAsync({ email: data.email, password: data.password }))
+    dispatch(createUserAsync({ email: data.email, password: data.password, addresses:[]}))
 
     console.log(data)
   }
@@ -45,6 +46,8 @@ function Signup() {
 
   return (
     <div>
+      
+      {user ? <Navigate to="/" replace={true} ></Navigate>: <Navigate to="/login" replace={true} ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

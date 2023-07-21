@@ -7,6 +7,7 @@ import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/20
 import { Link } from 'react-router-dom';
 import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
+import { fetchCartAsync } from '../../cart/cartSlice';
 
 const sortOptions = [
   { name: 'Best Rating', sort: 'rating', order: 'desc', current: false },
@@ -116,6 +117,7 @@ export default function ProductList() {
   useEffect(() => {
     dispatch(fetchAllBrandsAsync())
     dispatch(fetchAllCategoriesAsync())
+    dispatch(fetchCartAsync())
   }, [])
 
 

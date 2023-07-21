@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -11,46 +11,68 @@ import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import Protected from './features/auth/Protected';
+import { getUserAsync } from './features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Home />
-   ),
+      <Protected>
+        <Home />
+      </Protected>
+    ),
   },
   {
     path: "/login",
     element: (
-      <LoginPage />),
+      <LoginPage />
+
+    ),
   },
   {
     path: "/signup",
     element: (
       <SignupPage />
-   ),
+    ),
   },
   {
     path: "/cart",
     element: (
-      <CartPage />
-   ),
+      <Protected>
+        <CartPage />
+      </Protected>
+    ),
   },
   {
     path: "/checkout",
-    element: (<Checkout />),
+    element: (
+      <Protected>
+        <Checkout />
+      </Protected>
+    ),
   },
   {
     path: "/product-details/:id",
     element: (
-      <ProductDetailsPage />
-   ),
+      <Protected>
+        <ProductDetailsPage />
+      </Protected>
+    ),
   },
 ]);
 
 
 function App() {
+  
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getUserAsync())
+},[dispatch])
+
   return (
     <div>
       <RouterProvider router={router} />
