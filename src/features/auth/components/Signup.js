@@ -1,9 +1,53 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, Navigate } from 'react-router-dom'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { createUserAsync } from '../authSlice'
+
 
 function Signup() {
+
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.logUser);
+  console.log({user}, 'user');
+
+  const userSchema = yup.object({
+    email: yup.string().email('Invalid Email Format').required('Email is required'),
+    password: yup.string().required('Password is also required').min(5, 'Minimum 5-characters are required'),
+    confirmPassword: yup.string().required('Confirm password is required').oneOf([yup.ref('password')], 'Password do not match')
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: ""
+    },
+    resolver: yupResolver(userSchema)
+  })
+
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+
+    dispatch(createUserAsync({ email: data.email, password: data.password, addresses:[]}))
+
+    console.log(data)
+  }
+
+ 
+
   return (
     <div>
+      
+      {user && <Navigate to="/" replace={true} ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -17,7 +61,7 @@ function Signup() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" noValidate onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -25,13 +69,14 @@ function Signup() {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register("email")}
                   type="email"
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <p className='text-red-500 '>{errors.email?.message}</p>
             </div>
 
             <div>
@@ -44,13 +89,14 @@ function Signup() {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
+                  {...register("password")}
                   type="password"
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <p className='text-red-500 '>{errors.password?.message}</p>
             </div>
 
             <div>
@@ -67,12 +113,13 @@ function Signup() {
               <div className="mt-2">
                 <input
                   id="confirm-password"
-                  name="confirm-password"
+                  {...register("confirmPassword")}
                   type="password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <p className='text-red-500 '>{errors.confirmPassword?.message}</p>
             </div>
 
             <div>

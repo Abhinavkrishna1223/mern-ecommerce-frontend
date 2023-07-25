@@ -12,4 +12,4 @@ function ProductDetailsPage() {
   )
 }
 
-export default ProductDetailsPage
+export default ProductDetailsPage;
