@@ -12,7 +12,12 @@ import Checkout from './pages/Checkout';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import Protected from './features/auth/Protected';
 import { getUserAsync } from './features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PageNotFound from './pages/404Page';
+import OrderSuccessPage from './pages/OrderSuccessPage';
+import { getOrderAsync } from './features/orders/OrderSlice';
+import { fetchCartByUserIdAsync } from './features/cart/cartSlice';
+
 
 
 
@@ -62,16 +67,47 @@ const router = createBrowserRouter([
       </Protected>
     ),
   },
+  {
+    path: "*",
+    element: (
+     <PageNotFound/>
+    ),
+  },
+  {
+    path: "/order-success/:id",
+    element: (
+      <Protected>
+        <OrderSuccessPage />
+      </Protected>
+    ),
+  },
 ]);
 
 
 function App() {
   
   const dispatch = useDispatch();
+  const user = useSelector((state)=>state.auth.logUser);
+  console.log(user, "user");
+  // console.log(user.id,"Id-user");
+  
 
   useEffect(()=>{
-    dispatch(getUserAsync())
+
+    // dispatch(getUserAsync())
+    dispatch(getOrderAsync())
 },[dispatch])
+
+if(user && user.id){
+  console.log(user.id, "user Id");
+}
+
+useEffect(()=>{
+  if(user){
+    dispatch(fetchCartByUserIdAsync(user.id))
+  }
+  
+})
 
   return (
     <div>

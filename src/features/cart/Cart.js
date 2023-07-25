@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import {deleteCartAsync, fetchCartAsync, updateCartAsync } from './cartSlice';
+import {deleteCartAsync, updateCartAsync } from './cartSlice';
 
 
 
@@ -24,10 +24,7 @@ export function Cart() {
     dispatch(deleteCartAsync(id))
   }
 
-  useEffect(()=>{
-   dispatch(fetchCartAsync())
 
-  },[dispatch])
 
 
   const totalAmount = cartProduct.reduce((amnt, items)=> items.price*items.quantity + amnt,0);

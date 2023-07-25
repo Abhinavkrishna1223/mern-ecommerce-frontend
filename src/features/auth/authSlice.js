@@ -78,7 +78,6 @@ export const logUserSlice = createSlice({
       })
       .addCase(userDetailsAsync.fulfilled, (state, action) => {
         state.status = 'logUser-Updated';
-        console.log(state.logUser);
         state.logUser = action.payload;
       })
   },

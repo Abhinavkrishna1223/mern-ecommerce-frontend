@@ -40,6 +40,9 @@ export default function ProductDetails() {
 
   const product = useSelector((state) => state.product.selectedProduct);
 
+  const user = useSelector((state)=> state.auth.logUser);
+  console.log({user:user.id},"userId");
+
 
   const dispatch = useDispatch();
 
@@ -50,7 +53,7 @@ export default function ProductDetails() {
 
   
   const handleCart=(item)=>{
-    dispatch(addToCartAsync(item))
+    dispatch(addToCartAsync({...item, quantity:1, user:user.id}))
   }
 
 

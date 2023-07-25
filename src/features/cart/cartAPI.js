@@ -1,10 +1,7 @@
-export function fetchCartItems() {
+export function fetchCartItemsByUserId(userId) {
 
   return new Promise(async (resolve) => {
-    const response = await fetch(' http://localhost:8080/cart',{
-      method:'GET',
-      headers:{'Content-Type':'application/json'},
-    })
+    const response = await fetch(' http://localhost:8080/cart?user='+userId)
 
     const data = await response.json()
     resolve({ data })
@@ -15,17 +12,14 @@ export function fetchCartItems() {
 }
 
 
-
-
 export function addToCart(items) {
 
-  const {id, title, brand, price, thumbnail, quantity=1} = items;
-
+ 
   return new Promise(async (resolve) => {
     const response = await fetch(' http://localhost:8080/cart',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({id, title, brand, price, thumbnail, quantity})
+      body: JSON.stringify(items)
     })
 
     const data = await response.json()
@@ -70,3 +64,20 @@ export function deletCartItem(itemId) {
   );
 }
 
+export function resetCart(userId) {
+
+  return new Promise(async (resolve) => {
+    const response = await fetchCartItemsByUserId(userId)
+
+    const items = await response.json();
+
+    for(let item in items){
+      await deletCartItem(item.id)
+    }
+
+    resolve({status:"successfully deleted"})
+
+  }
+
+  );
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addToCart, deletCartItem, fetchCartItems, updateTheCart } from './cartAPI';
+import { addToCart, deletCartItem,  fetchCartItemsByUserId, resetCart, updateTheCart } from './cartAPI';
 
 
 const initialState = {
@@ -8,10 +8,10 @@ const initialState = {
 };
 
 
-export const fetchCartAsync = createAsyncThunk(
-  'cart/fetchCartItems',
-  async () => {
-    const response = await fetchCartItems();
+export const fetchCartByUserIdAsync = createAsyncThunk(
+  'cart/fetchCartItemsByUserId',
+  async (userId) => {
+    const response = await fetchCartItemsByUserId(userId);
     return response.data;
   }
 );
@@ -40,10 +40,19 @@ export const deleteCartAsync = createAsyncThunk(
   }
 );
 
+export const resetCartAsync = createAsyncThunk(
+  'cart/resetCart',
+  async (userId) => {
+    const response = await resetCart(userId);
+    return response.data;
+  }
+);
+
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  
+
   reducers: {
   },
   extraReducers: (builder) => {
@@ -56,10 +65,10 @@ export const cartSlice = createSlice({
         state.items.push(action.payload);
         return state;
       })
-      .addCase(fetchCartAsync.pending, (state) => {
+      .addCase(fetchCartByUserIdAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchCartAsync.fulfilled, (state, action) => {
+      .addCase(fetchCartByUserIdAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items = action.payload
       })
@@ -68,7 +77,7 @@ export const cartSlice = createSlice({
       })
       .addCase(updateCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        const index = state.items.findIndex((item)=> item.id===action.payload.id)
+        const index = state.items.findIndex((item) => item.id === action.payload.id)
         state.items[index] = action.payload
       })
       .addCase(deleteCartAsync.pending, (state) => {
@@ -76,9 +85,16 @@ export const cartSlice = createSlice({
       })
       .addCase(deleteCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        const index = state.items.findIndex((item)=> item.id===action.payload.id)
-        console.log(index,'Index hai');
-        state.items.splice(index,1)
+        const index = state.items.findIndex((item) => item.id === action.payload.id)
+        console.log(index, 'Index hai');
+        state.items.splice(index, 1)
+      })
+      .addCase(resetCartAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(resetCartAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.items = [];
       })
   },
 });

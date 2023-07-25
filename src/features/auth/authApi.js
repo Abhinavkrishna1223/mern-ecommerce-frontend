@@ -19,9 +19,7 @@ export function createUser(userData) {
 
 export function getUser() {
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/user', {
-      method: 'GET',
-    })
+    const response = await fetch('http://localhost:8080/user')
     const data = await response.json()
     resolve({ data })
     console.log(data, 'data of users');
