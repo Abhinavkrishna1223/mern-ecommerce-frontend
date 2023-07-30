@@ -18,8 +18,8 @@ export const fetchCartByUserIdAsync = createAsyncThunk(
 
 export const addToCartAsync = createAsyncThunk(
   'cart/addToCart',
-  async (items) => {
-    const response = await addToCart(items);
+  async (cartItem) => {
+    const response = await addToCart(cartItem);
     return response.data;
   }
 );
@@ -63,7 +63,6 @@ export const cartSlice = createSlice({
       .addCase(addToCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items.push(action.payload);
-        return state;
       })
       .addCase(fetchCartByUserIdAsync.pending, (state) => {
         state.status = 'loading';

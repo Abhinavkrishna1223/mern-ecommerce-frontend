@@ -1,58 +1,62 @@
 
 export function createUser(userData) {
-  return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
-    })
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch('http://localhost:8080/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      })
 
+      if (response.ok) { //  (response.ok) --> this checks the server status is 200 or not //
+        const data = await response.json()
+        resolve({ data })
 
-    const data = await response.json()
-    resolve({ data })
+      }
+      else {
+        const signUpErr = await response.json();
+
+        console.log(signUpErr,"signUpErr");
+        reject(signUpErr)
+      }
+
+    } catch (error) {
+      console.log(error, "Catch-Error");
+      reject(error)
+    }
 
   }
 
   );
 }
 
-
-export function getUser() {
-  return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/user')
-    const data = await response.json()
-    resolve({ data })
-    console.log(data, 'data of users');
-  }
-
-  );
-}
 
 
 
 export function loginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
 
-    const email = loginInfo.email;
-    const password = loginInfo.password;
+    try {
+      const response = await fetch('http://localhost:8080/auth/login',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginInfo)
+        })
 
-    const response = await fetch('http://localhost:8080/user?email=' + email)
-
-    const data = await response.json()
-
-    if (data.length) {
-      if (password === data[0].password) {
-        resolve({ data: data[0] });
-        console.log({ data: data[0] });
+      if (response.ok) {
+        const data = await response.json()
+        resolve({ data })
       }
       else {
-        reject({ message: 'wrong credentials' });
+        const err = await response.json()
+        reject(err)
       }
+    } catch (error) {
+      reject({ error })
+    }
 
-    }
-    else {
-      reject({ message: "User not found" });
-    }
+
   }
   );
 }

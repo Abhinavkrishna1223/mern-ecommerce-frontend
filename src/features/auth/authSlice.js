@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, getUser, loginUser, updateUser } from './authApi';
+import { createUser, loginUser, updateUser } from './authApi';
 
 
 const initialState = {
@@ -8,27 +8,25 @@ const initialState = {
   error: null,
 };
 
-export const getUserAsync = createAsyncThunk(
-  'user/getUser',
-  async () => {
-    const response = await getUser();
-    return response.data;
-  }
-);
-
 export const createUserAsync = createAsyncThunk(
   'user/createUser',
   async (logUserData) => {
     const response = await createUser(logUserData);
+    console.log(response.data,"Auth-Slice data");
     return response.data;
   }
 );
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (loginInfo) => {
-    const response = await loginUser(loginInfo);
-    return response.data;
+  async (loginInfo, {rejectWithValue}) => { // {rejectWithValue} is a Thunk method to rejecting the request with error message passed in it
+    try {
+      const response = await loginUser(loginInfo);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error)
+    }
   }
 );
 
@@ -48,19 +46,16 @@ export const logUserSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUserAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(getUserAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.logUser = action.payload;
-      })
       .addCase(createUserAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.logUser = action.payload;
+      })
+      .addCase(createUserAsync.rejected, (state, action) => {
+        state.status = 'signup-Failed';
+        state.error = action.payload;
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = 'loading';
@@ -70,8 +65,8 @@ export const logUserSlice = createSlice({
         state.logUser = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.status = 'idle';
-        state.error = action.error;
+        state.status = 'Login-Failed';
+        state.error = action.payload;
       })
       .addCase(userDetailsAsync.pending, (state, action) => {
         state.status = 'idle'

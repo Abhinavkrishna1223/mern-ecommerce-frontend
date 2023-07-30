@@ -12,9 +12,10 @@ function Signup() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.logUser);
-  console.log({user}, 'user');
+  console.log({ user }, 'user');
 
   const userSchema = yup.object({
+    username: yup.string().required("Username is must"),
     email: yup.string().email('Invalid Email Format').required('Email is required'),
     password: yup.string().required('Password is also required').min(5, 'Minimum 5-characters are required'),
     confirmPassword: yup.string().required('Confirm password is required').oneOf([yup.ref('password')], 'Password do not match')
@@ -26,6 +27,7 @@ function Signup() {
     formState
   } = useForm({
     defaultValues: {
+      username: "",
       email: "",
       password: "",
       confirmPassword: ""
@@ -37,16 +39,17 @@ function Signup() {
 
   const onSubmit = (data) => {
 
-    dispatch(createUserAsync({ email: data.email, password: data.password, addresses:[]}))
+    const userData = { email: data.email, password: data.password }
 
-    console.log(data)
+    dispatch(createUserAsync(userData))
+    console.log(userData, "signUpData")
   }
 
- 
+
 
   return (
     <div>
-      
+
       {user && <Navigate to="/" replace={true} ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -62,6 +65,22 @@ function Signup() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" noValidate onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  {...register("username")}
+                  type="username"
+                  autoComplete="username"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <p className='text-red-500 '>{errors.username?.message}</p>
+            </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address

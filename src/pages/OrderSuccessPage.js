@@ -12,12 +12,12 @@ const OrderSuccessPage =()=> {
 
     const user = useSelector((state)=> state.auth.logUser)
 
-    // useEffect(()=>{
-    //     dispatch(resetCartAsync(user.id));
+    useEffect(()=>{
+        dispatch(resetCartAsync(user.id));
 
-    //     dispatch(resetCurrOrder());
+        dispatch(resetCurrOrder());
 
-    // },[dispatch, user])
+    },[dispatch])
 
     return (
         <div>
