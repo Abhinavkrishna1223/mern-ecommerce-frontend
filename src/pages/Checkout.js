@@ -20,11 +20,12 @@ function Checkout() {
     const dispatch = useDispatch();
 
     const user = useSelector((state) => state.auth.logUser);
+
    
     const currentOrder = useSelector((state) => state.order.currentOrder);
     console.log(currentOrder, 'oredr');
 
-    console.log(user, 'pop');
+    console.log(user.addresses, 'pop');
 
     const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -80,24 +81,24 @@ function Checkout() {
 
         // dataBase.push(data)
 
-        dispatch(userDetailsAsync({ ...user, addresses: [...user.addresses, data] }));
+        dispatch(userDetailsAsync({ id:user?.id, addresses:data }));
 
         reset();
     }
 
     const cartProducts = useSelector((state) => state.cart.items)
-
-    const handleQntyChange = (e, item) => {
-        dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
-    }
+    
+    const handleQntyChange =(e, item)=>{
+        dispatch(updateCartAsync({id:item.id, quantity:+e.target.value}));
+      }
 
 
     const handleRemove = (id) => {
         dispatch(deleteCartAsync(id))
     }
 
-    const totalAmount = cartProducts.reduce((amnt, items) => items.price * items.quantity + amnt, 0);
-    const totalQuantity = cartProducts.reduce((qty, items) => items.quantity + qty, 0)
+    const totalAmount = cartProducts.reduce((amnt, items)=> (items.product.price)*(items.quantity) + amnt,0);
+    const totalQuantity = cartProducts.reduce((qty, items)=>items.quantity + qty,0);
 
     const handleOrder = () => {
 
@@ -341,12 +342,12 @@ function Checkout() {
                         <div className="mt-8">
                             <div className="flow-root">
                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                    {cartProducts.map((product) => (
-                                        <li key={product.id} className="flex py-6">
+                                    {cartProducts.map((item, index) => (
+                                        <li key={index} className="flex py-6">
                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                 <img
-                                                    src={product.thumbnail}
-                                                    alt={product.title}
+                                                    src={item.product.thumbnail}
+                                                    alt={item.product.title}
                                                     className="h-full w-full object-cover object-center"
                                                 />
                                             </div>
@@ -355,16 +356,16 @@ function Checkout() {
                                                 <div>
                                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                                         <h3>
-                                                            <a href={product.href}>{product.title}</a>
+                                                            <a href={item.product.href}>{item.product.title}</a>
                                                         </h3>
-                                                        <p className="ml-4">{product.price}</p>
+                                                        <p className="ml-4">{item.product.price}</p>
                                                     </div>
-                                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                                    <p className="mt-1 text-sm text-gray-500">{item.product.color}</p>
                                                 </div>
                                                 <div className="flex flex-1 items-end justify-between text-sm">
                                                     <p className="text-gray-500">Qty
 
-                                                        <select className='ml-[10px]' onChange={(e) => handleQntyChange(e, product)} value={product.quantity} >
+                                                        <select className='ml-[10px]' onChange={(e) => handleQntyChange(e, item)} value={item.quantity} >
                                                             <option value="1">1</option>
                                                             <option value="2">2</option>
                                                             <option value="3">3</option>
@@ -374,7 +375,7 @@ function Checkout() {
 
                                                     <div className="flex">
                                                         <button
-                                                            onClick={() => handleRemove(product.id)}
+                                                            onClick={() => handleRemove(item.id)}
                                                             type="button"
                                                             className="font-medium text-indigo-600 hover:text-indigo-500"
                                                         >

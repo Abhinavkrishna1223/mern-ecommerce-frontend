@@ -65,13 +65,13 @@ export function loginUser(loginInfo) {
 
 export function updateUser(updatedUser) {
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/user/' + 1, {
+    const response = await fetch(`http://localhost:8080/users/${updatedUser.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedUser)
     })
 
-    const data = await response.json()
+    const data = await response.json();
     console.log(data);
     resolve({ data })
 
