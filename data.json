@@ -673,54 +673,13 @@
       "id": 1
     },
     {
-      "email": "abhinav@gmail.com",
+      "email": "abhinav@metaversitytechnologies.com",
       "password": "12345",
       "addresses": [],
       "id": 2
     }
   ],
   "cart": [
-    {
-      "id": 6,
-      "title": "MacBook Pro",
-      "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
-      "price": 1749,
-      "discountPercentage": 11.02,
-      "rating": 4.57,
-      "stock": 83,
-      "brand": "Apple",
-      "category": "laptops",
-      "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
-      "images": [
-        "https://i.dummyjson.com/data/products/6/1.png",
-        "https://i.dummyjson.com/data/products/6/2.jpg",
-        "https://i.dummyjson.com/data/products/6/3.png",
-        "https://i.dummyjson.com/data/products/6/4.jpg"
-      ],
-      "quantity": 1,
-      "user": 1
-    },
-    {
-      "id": 15,
-      "title": "Eau De Perfume Spray",
-      "description": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality",
-      "price": 30,
-      "discountPercentage": 10.99,
-      "rating": 4.7,
-      "stock": 105,
-      "brand": "Lord - Al-Rehab",
-      "category": "fragrances",
-      "thumbnail": "https://i.dummyjson.com/data/products/15/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/15/1.jpg",
-        "https://i.dummyjson.com/data/products/15/2.jpg",
-        "https://i.dummyjson.com/data/products/15/3.jpg",
-        "https://i.dummyjson.com/data/products/15/4.jpg",
-        "https://i.dummyjson.com/data/products/15/thumbnail.jpg"
-      ],
-      "quantity": 3,
-      "user": 1
-    },
     {
       "id": 8,
       "title": "Microsoft Surface Laptop 4",
@@ -758,7 +717,7 @@
         "https://i.dummyjson.com/data/products/5/2.jpg",
         "https://i.dummyjson.com/data/products/5/3.jpg"
       ],
-      "quantity": 3,
+      "quantity": 1,
       "user": 2
     },
     {
@@ -800,8 +759,49 @@
         "https://i.dummyjson.com/data/products/24/4.jpg",
         "https://i.dummyjson.com/data/products/24/thumbnail.jpg"
       ],
-      "quantity": 3,
+      "quantity": 1,
       "user": 2
+    },
+    {
+      "id": 4,
+      "title": "OPPOF19",
+      "description": "OPPO F19 is officially announced on April 2021.",
+      "price": 280,
+      "discountPercentage": 17.91,
+      "rating": 4.3,
+      "stock": 123,
+      "brand": "OPPO",
+      "category": "smartphones",
+      "thumbnail": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+      "images": [
+        "https://i.dummyjson.com/data/products/4/1.jpg",
+        "https://i.dummyjson.com/data/products/4/2.jpg",
+        "https://i.dummyjson.com/data/products/4/3.jpg",
+        "https://i.dummyjson.com/data/products/4/4.jpg",
+        "https://i.dummyjson.com/data/products/4/thumbnail.jpg"
+      ],
+      "quantity": 2,
+      "user": 1
+    },
+    {
+      "id": 2,
+      "title": "iPhone X",
+      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+      "price": 899,
+      "discountPercentage": 17.94,
+      "rating": 4.44,
+      "stock": 34,
+      "brand": "Apple",
+      "category": "smartphones",
+      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+      "images": [
+        "https://i.dummyjson.com/data/products/2/1.jpg",
+        "https://i.dummyjson.com/data/products/2/2.jpg",
+        "https://i.dummyjson.com/data/products/2/3.jpg",
+        "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+      ],
+      "quantity": 3,
+      "user": 1
     }
   ],
   "orders": [
@@ -842,6 +842,23 @@
       },
       "cartProducts": [
         {
+          "id": 3,
+          "title": "Samsung Universe 9",
+          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+          "price": 1249,
+          "discountPercentage": 15.46,
+          "rating": 4.09,
+          "stock": 36,
+          "brand": "Samsung",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/3/1.jpg"
+          ],
+          "quantity": 1,
+          "user": 1
+        },
+        {
           "id": 6,
           "title": "MacBook Pro",
           "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
@@ -858,7 +875,7 @@
             "https://i.dummyjson.com/data/products/6/3.png",
             "https://i.dummyjson.com/data/products/6/4.jpg"
           ],
-          "quantity": 1,
+          "quantity": 2,
           "user": 1
         },
         {
@@ -881,19 +898,40 @@
           ],
           "quantity": 3,
           "user": 1
+        },
+        {
+          "id": 25,
+          "title": "Gulab Powder 50 Gram",
+          "description": "Dry Rose Flower Powder Gulab Powder 50 Gram • Treats Wounds",
+          "price": 70,
+          "discountPercentage": 13.58,
+          "rating": 4.87,
+          "stock": 47,
+          "brand": "Dry Rose",
+          "category": "groceries",
+          "thumbnail": "https://i.dummyjson.com/data/products/25/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/25/1.png",
+            "https://i.dummyjson.com/data/products/25/2.jpg",
+            "https://i.dummyjson.com/data/products/25/3.png",
+            "https://i.dummyjson.com/data/products/25/4.jpg",
+            "https://i.dummyjson.com/data/products/25/thumbnail.jpg"
+          ],
+          "quantity": 2,
+          "user": 1
         }
       ],
-      "totalAmount": 1839,
-      "totalQuantity": 4,
-      "paymentMethod": "cash",
+      "totalAmount": 4977,
+      "totalQuantity": 8,
+      "paymentMethod": "card",
       "selectedAddress": {
-        "name": "rana",
-        "email": "ran@haryana.com",
-        "phone": "+449650335313",
+        "name": "Mukesh",
+        "email": "Nabav@methnologies.com",
+        "phone": "9328425654",
         "streetAddress": "Sector 24",
-        "city": "Faridabad",
-        "state": "Haryana",
-        "postalCode": "121005"
+        "city": "Ayodhya",
+        "state": "UP",
+        "postalCode": "121995"
       },
       "id": 1
     }

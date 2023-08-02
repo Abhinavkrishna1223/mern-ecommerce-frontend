@@ -39,9 +39,9 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState(sizes[2])
 
   const product = useSelector((state) => state.product.selectedProduct);
-
   const user = useSelector((state)=> state.auth.logUser);
-  console.log({user:user.id},"userId");
+
+  console.log(user.logUser?.id,"userId-Product-Details");
 
 
   const dispatch = useDispatch();
@@ -52,8 +52,8 @@ export default function ProductDetails() {
   }, [dispatch, params.id]);
 
   
-  const handleCart=(item)=>{
-    dispatch(addToCartAsync({...item, quantity:1, user:user.id}))
+  const handleCart=(product)=>{
+    dispatch(addToCartAsync({product:product.id, user:user.logUser.id, quantity:1}))
   }
 
 

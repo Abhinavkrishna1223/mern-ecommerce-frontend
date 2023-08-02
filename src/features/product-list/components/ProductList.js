@@ -5,8 +5,9 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom';
-import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchProductsByFilterAsync } from '../productListSlice';
+import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchAllProductAsync, fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
+import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
 
 
 const sortOptions = [
@@ -33,7 +34,14 @@ export default function ProductList() {
   const categories = useSelector((state) => state.product.categories);
   const totalItems = useSelector((state) => state.product.totalItems);
 
-  console.log(totalItems)
+
+
+
+  const user = useSelector((state) => state.auth.logUser);
+  console.log(user, "user");
+  console.log(user.logUser?.id, "Id-user");
+
+
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
@@ -115,10 +123,11 @@ export default function ProductList() {
   }, [totalItems, sort])
 
   useEffect(() => {
+    dispatch(fetchAllProductAsync())
     dispatch(fetchAllBrandsAsync())
     dispatch(fetchAllCategoriesAsync())
-  }, [])
-
+    dispatch(fetchCartByUserIdAsync(user.logUser?.id))
+  }, [dispatch, user])
 
 
 
@@ -206,9 +215,10 @@ export default function ProductList() {
 
 
                 {/* Product grid */}
-                <div className="lg:col-span-3">
+                {products.length ? (<div className="lg:col-span-3">
                   <ProductGrid products={products} />
-                </div>
+                </div>) : (<h1>Loading...</h1>)}
+
               </div>
             </section>
 
@@ -458,7 +468,7 @@ function ProductGrid({ products }) {
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product, index) => (
               <>
-                <Link to={`/product-details/${product.id}`} key={product.id}>
+                <Link to={`/product-details/${product.id}`} key={index}>
                   <div key={index} className="group relative border-solid border-2 border-gray-200 p-2 lg:h-[350px]">
 
                     <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">

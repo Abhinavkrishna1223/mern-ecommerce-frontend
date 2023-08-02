@@ -1,7 +1,7 @@
 export function fetchCartItemsByUserId(userId) {
 
   return new Promise(async (resolve) => {
-    const response = await fetch(' http://localhost:8080/cart?user='+userId)
+    const response = await fetch(`http://localhost:8080/cart?user=${userId}`)
 
     const data = await response.json()
     resolve({ data })
@@ -33,7 +33,8 @@ export function addToCart(items) {
 export function updateTheCart(item) {
 
   return new Promise(async (resolve) => {
-    const response = await fetch(' http://localhost:8080/cart/'+ item.id ,{
+
+    const response = await fetch(`http://localhost:8080/cart/${item.id}` ,{
       method:'PATCH',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify(item)
@@ -55,7 +56,7 @@ export function deletCartItem(itemId) {
       headers:{'Content-Type':'application/json'},
     })
 
-    const data = await response.json()
+   const data = await response.json()
     console.log(data);
     resolve({ data: { id: itemId } });
 
@@ -69,9 +70,9 @@ export function resetCart(userId) {
   return new Promise(async (resolve) => {
     const response = await fetchCartItemsByUserId(userId)
 
-    const items = await response.json();
+    const items = await response.data ;
 
-    for(let item in items){
+    for(let item of items){
       await deletCartItem(item.id)
     }
 
