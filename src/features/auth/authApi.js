@@ -61,6 +61,32 @@ export function loginUser(loginInfo) {
   );
 }
 
+// For checking of Authentication //
+
+export function checkAuth() {
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      const response = await fetch('http://localhost:8080/auth/check')
+
+      if (response.ok) {
+        const data = await response.json()
+        resolve({ data })
+      }
+      else {
+        const err = await response.json()
+        reject(err)
+      }
+    } catch (error) {
+      reject({ error })
+    }
+
+
+  }
+  );
+}
+
+
 //Update User //
 
 export function updateUser(updatedUser) {

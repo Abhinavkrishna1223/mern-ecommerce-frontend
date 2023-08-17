@@ -18,7 +18,6 @@ export function Cart() {
 
   const handleQntyChange =(e, item)=>{
     dispatch(updateCartAsync({id:item.id, quantity:+e.target.value}));
-    console.log({id:item.id, quantity:+e.target.value});
   }
 
   const handleRemove=(id)=>{
@@ -29,7 +28,7 @@ export function Cart() {
 
 
   const totalAmount = cartProduct.reduce((amnt, items)=> (items.product.price)*(items.quantity) + amnt,0);
-  const totalQuantity = cartProduct.reduce((qty, items)=>items.quantity + qty,0)
+  const totalQuantity = cartProduct.reduce((qty, items)=>items.quantity + qty,0);
   
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { resetCartAsync } from '../features/cart/cartSlice';
 import { resetCurrOrder } from '../features/orders/OrderSlice';
@@ -10,10 +10,10 @@ const OrderSuccessPage =()=> {
 
     const dispatch = useDispatch();
 
-    const user = useSelector((state)=> state.auth.logUser)
+ 
 
     useEffect(()=>{
-        dispatch(resetCartAsync(user.id));
+        dispatch(resetCartAsync());
 
         dispatch(resetCurrOrder());
 

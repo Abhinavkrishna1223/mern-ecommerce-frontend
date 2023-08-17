@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, loginUser, updateUser } from './authApi';
+import { checkAuth, createUser, loginUser, updateUser } from './authApi';
 
 
 const initialState = {
   logUser: null,
   status: 'idle',
   error: null,
+  userChecked:false
 };
 
 export const createUserAsync = createAsyncThunk(
@@ -26,6 +27,18 @@ export const loginUserAsync = createAsyncThunk(
     } catch (error) {
       console.log(error);
       return rejectWithValue(error)
+    }
+  }
+);
+
+export const checkAuthUserAsync = createAsyncThunk(
+  'user/checkAuth',
+  async () => { 
+    try {
+      const response = await checkAuth();
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   }
 );
@@ -66,6 +79,17 @@ export const logUserSlice = createSlice({
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'Login-Failed';
+        state.error = action.payload;
+      })
+      .addCase(checkAuthUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(checkAuthUserAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.logUser = action.payload;
+      })
+      .addCase(checkAuthUserAsync.rejected, (state, action) => {
+        state.status = 'User-not-Found';
         state.error = action.payload;
       })
       .addCase(userDetailsAsync.pending, (state, action) => {

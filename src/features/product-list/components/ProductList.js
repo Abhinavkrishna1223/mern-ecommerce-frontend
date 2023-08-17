@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchAllProductAsync, fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
+import { selectUserInfo } from '../../user/userSlice';
+import { checkAuthUserAsync } from '../../auth/authSlice';
 
 
 const sortOptions = [
@@ -37,9 +39,9 @@ export default function ProductList() {
 
 
 
-  const user = useSelector((state) => state.auth.logUser);
+  const user = useSelector(selectUserInfo);
   console.log(user, "user");
-  console.log(user.logUser?.id, "Id-user");
+  console.log(user?.id, "Id-user productPage");
 
 
 
@@ -122,11 +124,15 @@ export default function ProductList() {
     setPage(1)
   }, [totalItems, sort])
 
+  useEffect(()=>{
+    dispatch(checkAuthUserAsync())
+  },[])
+
   useEffect(() => {
     dispatch(fetchAllProductAsync())
     dispatch(fetchAllBrandsAsync())
     dispatch(fetchAllCategoriesAsync())
-    dispatch(fetchCartByUserIdAsync(user.logUser?.id))
+    dispatch(fetchCartByUserIdAsync())
   }, [dispatch, user])
 
 

@@ -25,7 +25,7 @@ function Checkout() {
     const currentOrder = useSelector((state) => state.order.currentOrder);
     console.log(currentOrder, 'oredr');
 
-    console.log(user.addresses, 'pop');
+    console.log(user, 'pop');
 
     const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -77,9 +77,6 @@ function Checkout() {
 
     const onSubmit = (data) => {
 
-        // const dataBase = [];
-
-        // dataBase.push(data)
 
         dispatch(userDetailsAsync({ id:user?.id, addresses:data }));
 
@@ -262,7 +259,7 @@ function Checkout() {
 
                             <ul role="list" className="divide-y divide-gray-100">
                                         <>
-                                            {user.addresses.map((address, index) => (
+                                            {user?.logUser.addresses.map((address, index) => (
                                                 <li key={index} className="flex justify-between gap-x-6 py-5">
                                                     <div className="flex gap-x-4">
                                                         <input
