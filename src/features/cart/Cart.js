@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import {deleteCartAsync, updateCartAsync } from './cartSlice';
+import {deleteCartAsync, selectCartLoaded, updateCartAsync } from './cartSlice';
 
 
 
@@ -16,9 +16,10 @@ export function Cart() {
 
   const cartProduct = useSelector((state)=>state?.cart.items);
 
+  const cartLoaded = useSelector(selectCartLoaded)
+
   const handleQntyChange =(e, item)=>{
     dispatch(updateCartAsync({id:item.id, quantity:+e.target.value}));
-    console.log({id:item.id, quantity:+e.target.value});
   }
 
   const handleRemove=(id)=>{
@@ -29,16 +30,18 @@ export function Cart() {
 
 
   const totalAmount = cartProduct.reduce((amnt, items)=> (items.product.price)*(items.quantity) + amnt,0);
-  const totalQuantity = cartProduct.reduce((qty, items)=>items.quantity + qty,0)
+  const totalQuantity = cartProduct.reduce((qty, items)=>items.quantity + qty,0);
   
 
   return (
+    <>
+    {cartProduct.length && cartLoaded}
     <div className=' mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white'>
       <h1 className= 'flex justify-between font-bold text-center text-[2rem] border-2 mt-4 border-zinc-950 bg-cyan-300'>Cart <ShoppingCartIcon className="h-10 w-10" aria-hidden="true"/> </h1>
       <div className="mt-8">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {cartProduct.map((item) => (
+            { cartProduct.map((item) => (
               <li key={item.id} className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
@@ -120,5 +123,6 @@ export function Cart() {
         </div>
       </div>
     </div>
+    </>
   );
 }

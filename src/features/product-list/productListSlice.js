@@ -11,14 +11,6 @@ const initialState = {
 };
 
 
-export const fetchAllProductAsync = createAsyncThunk(
-  'products/fetchAllProducts',
-  async () => {
-    const response = await fetchAllProducts();
-    return response.data;
-  }
-);
-
 export const fetchProductByIdAsync = createAsyncThunk(
   'products/fetchProductById',
   async (id) => {
@@ -68,16 +60,6 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProductAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchAllProductAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.products = action.payload;
-      })
-      .addCase(fetchAllProductAsync.rejected, (state, action) => {
-        state.status = 'Rejected';
-      })
       .addCase(fetchProductsByFilterAsync.pending, (state) => {
         state.status = 'loading';
       })

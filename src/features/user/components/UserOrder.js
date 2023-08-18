@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLoggedUserOrderAsync } from '../userSlice';
+import {  fetchLoggedUserOrdersAsync, selectUserInfo, selectUserOrders } from '../userSlice';
 
 function UserOrder() {
-    const user = useSelector((state) => state.auth.logUser);
-    const userOrders = useSelector((state) => state.user.userOrders);
+    const user = useSelector(selectUserInfo);
+    console.log(user, "UserOrder may Info");
+    const userOrders = useSelector(selectUserOrders);
     console.log(userOrders, "userOrders");
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchLoggedUserOrderAsync(user.id))
+        dispatch(fetchLoggedUserOrdersAsync())
     }, [dispatch])
     return (
         <div>

@@ -6,8 +6,8 @@ import { deleteCartAsync, updateCartAsync } from '../features/cart/cartSlice';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { userDetailsAsync } from '../features/auth/authSlice';
 import { createOrderAsync } from '../features/orders/OrderSlice';
+import { selectUserInfo, userDetailsAsync } from '../features/user/userSlice';
 
 
 
@@ -19,13 +19,13 @@ function Checkout() {
 
     const dispatch = useDispatch();
 
-    const user = useSelector((state) => state.auth.logUser);
+    const user = useSelector(selectUserInfo);
 
    
     const currentOrder = useSelector((state) => state.order.currentOrder);
     console.log(currentOrder, 'oredr');
 
-    console.log(user.addresses, 'pop');
+    console.log(user, 'userInfo');
 
     const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -77,9 +77,6 @@ function Checkout() {
 
     const onSubmit = (data) => {
 
-        // const dataBase = [];
-
-        // dataBase.push(data)
 
         dispatch(userDetailsAsync({ id:user?.id, addresses:data }));
 
@@ -262,7 +259,7 @@ function Checkout() {
 
                             <ul role="list" className="divide-y divide-gray-100">
                                         <>
-                                            {user.addresses.map((address, index) => (
+                                            {user?.addresses.map((address, index) => (
                                                 <li key={index} className="flex justify-between gap-x-6 py-5">
                                                     <div className="flex gap-x-4">
                                                         <input

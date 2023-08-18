@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, loginUser, updateUser } from './authApi';
+import { checkAuth, createUser, loginUser, updateUser } from './authApi';
 
 
 const initialState = {
   logUser: null,
   status: 'idle',
   error: null,
+  userChecked:false
 };
 
 export const createUserAsync = createAsyncThunk(
@@ -30,13 +31,19 @@ export const loginUserAsync = createAsyncThunk(
   }
 );
 
-export const userDetailsAsync = createAsyncThunk(
-  'user/updateUser',
-  async (updatedlogUser) => {
-    const response = await updateUser(updatedlogUser);
-    return response.data;
+export const checkAuthUserAsync = createAsyncThunk(
+  'user/checkAuth',
+  async () => { 
+    try {
+      const response = await checkAuth();
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
+
+
 
 
 export const logUserSlice = createSlice({
@@ -68,15 +75,23 @@ export const logUserSlice = createSlice({
         state.status = 'Login-Failed';
         state.error = action.payload;
       })
-      .addCase(userDetailsAsync.pending, (state, action) => {
-        state.status = 'idle'
+      .addCase(checkAuthUserAsync.pending, (state) => {
+        state.status = 'loading';
       })
-      .addCase(userDetailsAsync.fulfilled, (state, action) => {
-        state.status = 'logUser-Updated';
+      .addCase(checkAuthUserAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
         state.logUser = action.payload;
+        state.userChecked = true;
+      })
+      .addCase(checkAuthUserAsync.rejected, (state, action) => {
+        state.status = 'User-not-Found';
+        state.error = action.payload;
+        state.userChecked = true;
       })
   },
 });
+
+export const selectUserChecked =(state)=>state.auth.userChecked;
 
 export const { increment, decrement, incrementByAmount } = logUserSlice.actions;
 

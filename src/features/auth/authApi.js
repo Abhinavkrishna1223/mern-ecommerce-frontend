@@ -61,21 +61,30 @@ export function loginUser(loginInfo) {
   );
 }
 
-//Update User //
+// For checking of Authentication //
 
-export function updateUser(updatedUser) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/users/${updatedUser.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedUser)
-    })
+export function checkAuth() {
+  return new Promise(async (resolve, reject) => {
 
-    const data = await response.json();
-    console.log(data);
-    resolve({ data })
+    try {
+      const response = await fetch('http://localhost:8080/auth/check')
+
+      if (response.ok) {
+        const data = await response.json()
+        resolve({ data })
+      }
+      else {
+        const err = await response.json()
+        reject(err)
+      }
+    } catch (error) {
+      reject({ error })
+    }
+
 
   }
-
   );
 }
+
+
+

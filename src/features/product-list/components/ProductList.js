@@ -5,9 +5,11 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom';
-import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchAllProductAsync, fetchProductsByFilterAsync } from '../productListSlice';
+import { fetchAllBrandsAsync, fetchAllCategoriesAsync,fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
+import { selectUserInfo } from '../../user/userSlice';
+import { selectUserChecked } from '../../auth/authSlice';
 
 
 const sortOptions = [
@@ -37,9 +39,9 @@ export default function ProductList() {
 
 
 
-  const user = useSelector((state) => state.auth.logUser);
+  const user = useSelector((state)=> state.auth.logUser);
   console.log(user, "user");
-  console.log(user.logUser?.id, "Id-user");
+  console.log(user?.id, "Id-user productPage");
 
 
 
@@ -122,12 +124,20 @@ export default function ProductList() {
     setPage(1)
   }, [totalItems, sort])
 
+  const userChecked = useSelector(selectUserChecked)
+
+  const userInfo = useSelector(selectUserInfo);
+
   useEffect(() => {
-    dispatch(fetchAllProductAsync())
-    dispatch(fetchAllBrandsAsync())
-    dispatch(fetchAllCategoriesAsync())
-    dispatch(fetchCartByUserIdAsync(user.logUser?.id))
-  }, [dispatch, user])
+    if (userChecked) {
+      dispatch(fetchAllBrandsAsync())
+      dispatch(fetchAllCategoriesAsync())
+      dispatch(fetchCartByUserIdAsync(user?.id))
+
+      console.log(userInfo,"Information");
+    }
+
+  }, [dispatch, user, userChecked, userInfo])
 
 
 
