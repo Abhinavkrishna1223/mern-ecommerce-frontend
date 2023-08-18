@@ -11,11 +11,12 @@ import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import Protected from './features/auth/Protected';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import PageNotFound from './pages/404Page';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import UserOrder from './features/user/components/UserOrder';
-import { checkAuthUserAsync } from './features/auth/authSlice';
+import { checkAuthUserAsync, selectUserChecked } from './features/auth/authSlice';
+
 
 
 
@@ -107,12 +108,19 @@ const router = createBrowserRouter([
 function App() {
 
   const dispatch = useDispatch()
+
+  const userChecked = useSelector(selectUserChecked)
+
+
+
+
   useEffect(()=>{
     dispatch(checkAuthUserAsync())
+  
   },[])
   return (
     <div>
-      <RouterProvider router={router} />
+      {userChecked && <RouterProvider router={router} />}
     </div>
   );
 }

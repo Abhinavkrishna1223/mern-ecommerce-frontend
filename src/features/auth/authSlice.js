@@ -43,13 +43,7 @@ export const checkAuthUserAsync = createAsyncThunk(
   }
 );
 
-export const userDetailsAsync = createAsyncThunk(
-  'user/updateUser',
-  async (updatedlogUser) => {
-    const response = await updateUser(updatedlogUser);
-    return response.data;
-  }
-);
+
 
 
 export const logUserSlice = createSlice({
@@ -87,20 +81,17 @@ export const logUserSlice = createSlice({
       .addCase(checkAuthUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.logUser = action.payload;
+        state.userChecked = true;
       })
       .addCase(checkAuthUserAsync.rejected, (state, action) => {
         state.status = 'User-not-Found';
         state.error = action.payload;
-      })
-      .addCase(userDetailsAsync.pending, (state, action) => {
-        state.status = 'idle'
-      })
-      .addCase(userDetailsAsync.fulfilled, (state, action) => {
-        state.status = 'logUser-Updated';
-        state.logUser = action.payload;
+        state.userChecked = true;
       })
   },
 });
+
+export const selectUserChecked =(state)=>state.auth.userChecked;
 
 export const { increment, decrement, incrementByAmount } = logUserSlice.actions;
 

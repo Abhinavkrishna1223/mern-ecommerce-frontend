@@ -5,13 +5,14 @@ import { addToCart, deletCartItem,  fetchCartItemsByUserId, resetCart, updateThe
 const initialState = {
   items: [],
   status: 'idle',
+  cartLoaded:false,
 };
 
 
 export const fetchCartByUserIdAsync = createAsyncThunk(
   'cart/fetchCartItemsByUserId',
-  async () => {
-    const response = await fetchCartItemsByUserId();
+  async (id) => {
+    const response = await fetchCartItemsByUserId(id);
     return response.data;
   }
 );
@@ -70,6 +71,11 @@ export const cartSlice = createSlice({
       .addCase(fetchCartByUserIdAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items = action.payload
+        state.cartLoaded = true
+      })
+      .addCase(fetchCartByUserIdAsync.rejected, (state) => {
+        state.status = 'Loading-Failed';
+        state.cartLoaded = true
       })
       .addCase(updateCartAsync.pending, (state) => {
         state.status = 'loading';
@@ -99,6 +105,8 @@ export const cartSlice = createSlice({
 });
 
 export const { increment, decrement, incrementByAmount } = cartSlice.actions;
+
+export const selectCartLoaded = (state)=> state.cart.cartLoaded;
 
 
 export default cartSlice.reducer;
