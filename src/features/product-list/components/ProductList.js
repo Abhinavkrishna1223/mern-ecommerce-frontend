@@ -132,13 +132,13 @@ export default function ProductList() {
     if (userChecked) {
       dispatch(fetchAllBrandsAsync())
       dispatch(fetchAllCategoriesAsync())
-      dispatch(fetchCartByUserIdAsync(user?.id))
+      dispatch(fetchCartByUserIdAsync())
       dispatch(fetchLoggedUserInfoAsync())
 
       console.log(userInfo,"Information");
     }
 
-  }, [dispatch, user, userChecked, userInfo])
+  }, [])
 
 
 
