@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { fetchAllBrandsAsync, fetchAllCategoriesAsync,fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
-import { selectUserInfo } from '../../user/userSlice';
+import { fetchLoggedUserInfoAsync, selectUserInfo } from '../../user/userSlice';
 import { selectUserChecked } from '../../auth/authSlice';
 
 
@@ -126,18 +126,15 @@ export default function ProductList() {
 
   const userChecked = useSelector(selectUserChecked)
 
-  const userInfo = useSelector(selectUserInfo);
-
   useEffect(() => {
     if (userChecked) {
       dispatch(fetchAllBrandsAsync())
       dispatch(fetchAllCategoriesAsync())
-      dispatch(fetchCartByUserIdAsync(user?.id))
-
-      console.log(userInfo,"Information");
+      dispatch(fetchCartByUserIdAsync())
+      dispatch(fetchLoggedUserInfoAsync())
     }
 
-  }, [dispatch, user, userChecked, userInfo])
+  }, [])
 
 
 

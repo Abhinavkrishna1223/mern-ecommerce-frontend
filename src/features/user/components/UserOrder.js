@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {  fetchLoggedUserOrdersAsync, selectUserInfo, selectUserOrders } from '../userSlice';
+import {  fetchLoggedUserOrdersAsync, selectUserInfo } from '../userSlice';
+import { getOrderAsync, selectOrders } from '../../orders/OrderSlice';
 
 function UserOrder() {
     const user = useSelector(selectUserInfo);
     console.log(user, "UserOrder may Info");
-    const userOrders = useSelector(selectUserOrders);
+    const userOrders = useSelector(selectOrders);
     console.log(userOrders, "userOrders");
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchLoggedUserOrdersAsync())
+        dispatch(getOrderAsync())
     }, [dispatch])
     return (
         <div>
@@ -21,12 +22,12 @@ function UserOrder() {
                         <div className="mt-8">
                             <div className="flow-root">
                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                    {order.cartProducts.map((item) => (
-                                        <li key={item.id} className="flex py-6">
+                                    {order.product.map((item, index) => (
+                                        <li key={index} className="flex py-6">
                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                 <img
-                                                    src={item.thumbnail}
-                                                    alt={item.title}
+                                                    src={item.product.thumbnail}
+                                                    alt={item.product.title}
                                                     className="h-full w-full object-cover object-center"
                                                 />
                                             </div>
@@ -37,9 +38,9 @@ function UserOrder() {
                                                         <h3>
                                                             <a href={item.title}>{item.title}</a>
                                                         </h3>
-                                                        <p className="ml-4">${item.price}</p>
+                                                        <p className="ml-4">${item.product.price}</p>
                                                     </div>
-                                                    <p className="mt-1 text-sm text-gray-500">{item.brand}</p>
+                                                    <p className="mt-1 text-sm text-gray-500">{item.product.brand}</p>
                                                 </div>
                                                 <div className="flex flex-1 items-end justify-between text-sm">
                                                     <p className="text-gray-500">Qty {item.quantity}

@@ -55,5 +55,7 @@ export const orderSlice = createSlice({
 
 export const {resetCurrOrder} = orderSlice.actions;
 
+export const selectOrders = (state)=> state.order.orders;
+
 
 export default orderSlice.reducer;
