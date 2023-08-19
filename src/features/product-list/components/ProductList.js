@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { fetchAllBrandsAsync, fetchAllCategoriesAsync,fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
-import { selectUserInfo } from '../../user/userSlice';
+import { fetchLoggedUserInfoAsync, selectUserInfo } from '../../user/userSlice';
 import { selectUserChecked } from '../../auth/authSlice';
 
 
@@ -133,6 +133,7 @@ export default function ProductList() {
       dispatch(fetchAllBrandsAsync())
       dispatch(fetchAllCategoriesAsync())
       dispatch(fetchCartByUserIdAsync(user?.id))
+      dispatch(fetchLoggedUserInfoAsync())
 
       console.log(userInfo,"Information");
     }
