@@ -83,7 +83,12 @@ function Checkout() {
         reset();
     }
 
-    const cartProducts = useSelector((state) => state.cart.items)
+    const resetForm=()=>{
+        reset();
+    }
+
+    const product = useSelector((state) => state.cart.items)
+    
     
     const handleQntyChange =(e, item)=>{
         dispatch(updateCartAsync({id:item.id, quantity:+e.target.value}));
@@ -94,25 +99,21 @@ function Checkout() {
         dispatch(deleteCartAsync(id))
     }
 
-    const totalAmount = cartProducts.reduce((amnt, items)=> (items.product.price)*(items.quantity) + amnt,0);
-    const totalQuantity = cartProducts.reduce((qty, items)=>items.quantity + qty,0);
+    const totalAmount = product.reduce((amnt, items)=> (items.product.price)*(items.quantity) + amnt,0);
+    const totalQuantity = product.reduce((qty, items)=>items.quantity + qty,0);
 
     const handleOrder = () => {
 
-        const order = { user, cartProducts, totalAmount, totalQuantity, paymentMethod, selectedAddress }
+        const order = { user:user.id, product, totalAmount, totalQuantity, paymentMethod, selectedAddress }
 
         dispatch(createOrderAsync(order))
-
-        //TODO: redirect to order success page //
-        //TODO: clear cart after order //
-        //TODO: change in stock value of items whem items get purchased //
     }
 
     const [open, setOpen] = useState(true)
     return (
 
         <>
-            {!cartProducts.length && <Navigate to="/"></Navigate>}
+            {!product.length && <Navigate to="/"></Navigate>}
             {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
                 <div className="lg:col-span-3">
@@ -239,7 +240,7 @@ function Checkout() {
 
                             </div>
                             <div className="mt-6 flex items-center justify-end gap-x-6">
-                                <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                                <button type="button" onClick={resetForm} className="text-sm font-semibold leading-6 text-gray-900">
                                     Reset
                                 </button>
                                 <button
@@ -339,7 +340,7 @@ function Checkout() {
                         <div className="mt-8">
                             <div className="flow-root">
                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                    {cartProducts.map((item, index) => (
+                                    {product.map((item, index) => (
                                         <li key={index} className="flex py-6">
                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                 <img

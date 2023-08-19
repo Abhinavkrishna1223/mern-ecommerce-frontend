@@ -126,16 +126,12 @@ export default function ProductList() {
 
   const userChecked = useSelector(selectUserChecked)
 
-  const userInfo = useSelector(selectUserInfo);
-
   useEffect(() => {
     if (userChecked) {
       dispatch(fetchAllBrandsAsync())
       dispatch(fetchAllCategoriesAsync())
       dispatch(fetchCartByUserIdAsync())
       dispatch(fetchLoggedUserInfoAsync())
-
-      console.log(userInfo,"Information");
     }
 
   }, [])
