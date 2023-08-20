@@ -11,11 +11,12 @@ import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import Protected from './features/auth/Protected';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PageNotFound from './pages/404Page';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import UserOrder from './features/user/components/UserOrder';
 import { checkAuthUserAsync, selectUserChecked } from './features/auth/authSlice';
+
 
 
 
@@ -29,8 +30,8 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Home />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
   {
@@ -50,56 +51,56 @@ const router = createBrowserRouter([
     path: "/cart",
     element: (
       <Protected>
-    
+
         <CartPage />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
   {
     path: "/checkout",
     element: (
       <Protected>
-    
+
         <Checkout />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
   {
-    path: "/product-details/:id", 
+    path: "/product-details/:id",
     element: (
       <Protected>
-    
+
         <ProductDetailsPage />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
   {
     path: "*",
     element: (
-     <PageNotFound/>
+      <PageNotFound />
     ),
   },
   {
     path: "/order-success/:id",
     element: (
       <Protected>
-    
+
         <OrderSuccessPage />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
   {
     path: "/orders",
     element: (
       <Protected>
-    
+
         <UserOrder />
-        </Protected>
- 
+      </Protected>
+
     ),
   },
 ]);
@@ -114,13 +115,14 @@ function App() {
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(checkAuthUserAsync())
-  
-  },[])
+  }, [])
   return (
     <div>
-      {userChecked && <RouterProvider router={router} />}
+      {
+        userChecked && <RouterProvider router={router} />
+      }
     </div>
   );
 }
