@@ -1,7 +1,11 @@
 
 export function fetchProductById(id) {
   return new Promise(async(resolve) => {
-    const response = await fetch(`http://localhost:8080/products/${id}`)
+    const response = await fetch(`http://localhost:8080/products/${id}`,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    })
     const data = await response.json();
     
     console.log(data.images, 'Id data')
@@ -39,7 +43,11 @@ export function fetchProductsByFilter({filter, sort, pagination}) {
   }
 
   return new Promise(async(resolve) => {
-    const response = await fetch('http://localhost:8080/products?'+ queryString)
+    const response = await fetch('http://localhost:8080/products?'+ queryString,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    })
     const data = await response.json();
     const totalItems = response.headers.get('X-Total-Count')
 
@@ -50,7 +58,11 @@ export function fetchProductsByFilter({filter, sort, pagination}) {
 export function fetchAllCategories() {
 
   return new Promise(async(resolve) => {
-    const response = await fetch(`http://localhost:8080/categories`)
+    const response = await fetch(`http://localhost:8080/categories`,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    })
     const data = await response.json();
     console.log(data, 'Categories')
     resolve({data})
@@ -59,7 +71,11 @@ export function fetchAllCategories() {
 
 export function fetchAllBrands() {
   return new Promise(async(resolve) => {
-    const response = await fetch('http://localhost:8080/brands')
+    const response = await fetch('http://localhost:8080/brands',{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    })
     const data = await response.json();
 
     console.log(data, 'Brands')

@@ -46,6 +46,8 @@ export function loginUser(loginInfo) {
 
       if (response.ok) {
         const data = await response.json()
+        console.log(data,'login-data');
+        localStorage.setItem('token',data)
         resolve({ data })
       }
       else {
@@ -67,10 +69,14 @@ export function checkAuth() {
   return new Promise(async (resolve, reject) => {
 
     try {
-      const response = await fetch('http://localhost:8080/auth/check')
+      const response = await fetch('http://localhost:8080/auth/check',{
+        headers:{
+          "Authorization":`Bearer ${localStorage.getItem('token')}`
+        }
+      })
 
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json();
         resolve({ data })
       }
       else {

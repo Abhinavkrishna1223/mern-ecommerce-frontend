@@ -5,7 +5,6 @@ import SignupPage from './pages/SignupPage';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
 } from "react-router-dom";
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
@@ -14,8 +13,8 @@ import Protected from './features/auth/Protected';
 import { useDispatch, useSelector } from 'react-redux';
 import PageNotFound from './pages/404Page';
 import OrderSuccessPage from './pages/OrderSuccessPage';
-import UserOrder from './features/user/components/UserOrder';
 import { checkAuthUserAsync, selectUserChecked } from './features/auth/authSlice';
+import UserOrderPage from './pages/UserOrderPage';
 
 
 
@@ -98,7 +97,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
 
-        <UserOrder />
+        <UserOrderPage />
       </Protected>
 
     ),

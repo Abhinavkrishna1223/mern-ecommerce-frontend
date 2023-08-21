@@ -1,7 +1,11 @@
 export function fetchCartItemsByUserId() {
 
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/cart`)
+    const response = await fetch(`http://localhost:8080/cart`,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    })
 
     const data = await response.json()
     resolve({ data })
@@ -18,7 +22,10 @@ export function addToCart(items) {
   return new Promise(async (resolve) => {
     const response = await fetch(' http://localhost:8080/cart',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(items)
     })
 
@@ -36,7 +43,10 @@ export function updateTheCart(item) {
 
     const response = await fetch(`http://localhost:8080/cart/${item.id}` ,{
       method:'PATCH',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(item)
     })
 
@@ -53,7 +63,10 @@ export function deletCartItem(itemId) {
   return new Promise(async (resolve) => {
     const response = await fetch(' http://localhost:8080/cart/'+ itemId ,{
       method:'DELETE',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      },
     })
 
    const data = await response.json()

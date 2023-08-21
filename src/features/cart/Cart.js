@@ -16,8 +16,6 @@ export function Cart() {
 
   const cartProduct = useSelector((state)=>state?.cart.items);
 
-  const cartLoaded = useSelector(selectCartLoaded)
-
   const handleQntyChange =(e, item)=>{
     dispatch(updateCartAsync({id:item.id, quantity:+e.target.value}));
   }
