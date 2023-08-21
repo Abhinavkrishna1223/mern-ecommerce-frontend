@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
-import {deleteCartAsync, selectCartLoaded, updateCartAsync } from './cartSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import {deleteCartAsync, updateCartAsync } from './cartSlice';
 
 
 
@@ -13,6 +13,7 @@ export function Cart() {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
 
   const cartProduct = useSelector((state)=>state?.cart.items);
 
@@ -33,7 +34,7 @@ export function Cart() {
 
   return (
     <>
-    <div className=' mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white'>
+    {cartProduct.length ? <div className=' mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white'>
       <h1 className= 'flex justify-between font-bold text-center text-[2rem] border-2 mt-4 border-zinc-950 bg-cyan-300'>Cart <ShoppingCartIcon className="h-10 w-10" aria-hidden="true"/> </h1>
       <div className="mt-8">
         <div className="flow-root">
@@ -119,7 +120,7 @@ export function Cart() {
           </p>
         </div>
       </div>
-    </div>
+    </div>: navigate('/')}
     </>
   );
 }
