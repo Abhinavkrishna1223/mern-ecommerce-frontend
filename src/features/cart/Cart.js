@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Fragment, useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import {deleteCartAsync, updateCartAsync } from './cartSlice';
@@ -13,6 +13,7 @@ export function Cart() {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
+
   const navigate = useNavigate();
 
   const cartProduct = useSelector((state)=>state?.cart.items);
