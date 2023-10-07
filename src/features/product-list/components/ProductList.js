@@ -8,8 +8,10 @@ import { Link } from 'react-router-dom';
 import { fetchAllBrandsAsync, fetchAllCategoriesAsync,fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
-import { fetchLoggedUserInfoAsync, selectUserInfo } from '../../user/userSlice';
+import { fetchLoggedUserInfoAsync } from '../../user/userSlice';
 import { selectUserChecked } from '../../auth/authSlice';
+import { Paper, Typography } from '@mui/material';
+
 
 
 const sortOptions = [
@@ -133,21 +135,20 @@ export default function ProductList() {
       dispatch(fetchCartByUserIdAsync())
       dispatch(fetchLoggedUserInfoAsync())
     }
-
   }, [])
 
 
 
   return (
     <div>
-
-      <div className="bg-white">
+      
+      <Paper elevation={14} className="bg-white">
         <div>
           {/* Mobile filter dialog */}
 
           <MobileFilter mobileFiltersOpen={mobileFiltersOpen} setMobileFiltersOpen={setMobileFiltersOpen} handleFilter={handleFilter} filters={filters} />
 
-          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg)", backgroundRepeat:"no-repeat", backgroundSize:"cover"}}>
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Products</h1>
 
@@ -234,7 +235,7 @@ export default function ProductList() {
 
           </main>
         </div>
-      </div>
+      </Paper>
 
 
 
@@ -408,7 +409,7 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 bg-[#b0ffe7db]">
         <div className="flex flex-1 justify-between sm:hidden">
           <div
             onClick={() => handlePage(page > 1 ? page - 1 : page)}
@@ -468,7 +469,7 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
 function ProductGrid({ products }) {
   return (
     <div>
-      <div className="bg-white">
+      <div style={{background:"linear-gradient(to bottom right, #b19cee, #FFDDE1)"}} >
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Products</h2>
 
@@ -476,8 +477,8 @@ function ProductGrid({ products }) {
             {products.map((product, index) => (
               <>
                 <Link to={`/product-details/${product.id}`} key={index}>
-                  <div key={index} className="group relative border-solid border-2 border-gray-200 p-2 lg:h-[350px]">
-
+                  <div key={index}>
+                    <Paper elevation={8} className='group relative  p-2 lg:h-[350px]'>
                     <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                       <img
                         src={product.thumbnail}
@@ -490,7 +491,7 @@ function ProductGrid({ products }) {
                         <h3 className="text-sm text-gray-700">
                           <a href={product.href}>
                             <span aria-hidden="true" className="absolute inset-0" />
-                            {product.title}
+                           <Typography variant='subtitle1'>{product.title}</Typography> 
                           </a>
                         </h3>
 
@@ -508,6 +509,7 @@ function ProductGrid({ products }) {
                       </div>
 
                     </div>
+                    </Paper>
                   </div>
                 </Link>
 
