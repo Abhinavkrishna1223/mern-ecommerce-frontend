@@ -37,7 +37,7 @@ export default function Navbar({ children }) {
     <>
 
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" style={{background:"linear-gradient(to bottom right, #0021ff, #38e5ff)"}}>
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -205,7 +205,7 @@ export default function Navbar({ children }) {
             </>
           )}
         </Disclosure>
-        <main>
+        <main style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg) no-repeat", backgroundSize:"cover"}}>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>

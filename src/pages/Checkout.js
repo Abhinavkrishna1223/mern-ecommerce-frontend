@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import { Fragment, useState } from 'react'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { Link, Navigate} from 'react-router-dom';
@@ -108,8 +109,8 @@ function Checkout() {
 
         dispatch(createOrderAsync(order))
     }
-
     const [open, setOpen] = useState(true)
+    
     return (
 
         <>
