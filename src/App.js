@@ -15,6 +15,7 @@ import PageNotFound from './pages/404Page';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import { checkAuthUserAsync, selectUserChecked } from './features/auth/authSlice';
 import UserOrderPage from './pages/UserOrderPage';
+import './App.css';
 
 
 

@@ -142,13 +142,13 @@ export default function ProductList() {
   return (
     <div>
       
-      <Paper elevation={14} className="bg-white">
+      <Paper elevation={14} className="bg-white w-full">
         <div>
           {/* Mobile filter dialog */}
 
           <MobileFilter mobileFiltersOpen={mobileFiltersOpen} setMobileFiltersOpen={setMobileFiltersOpen} handleFilter={handleFilter} filters={filters} />
 
-          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg)", backgroundRepeat:"no-repeat", backgroundSize:"cover"}}>
+          <main className="mx-auto w-full px-4 sm:px-6 lg:px-8" style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg)", backgroundRepeat:"no-repeat", backgroundSize:"cover", boxShadow:"7px -4px 35px 7px"}}>
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Products</h1>
 

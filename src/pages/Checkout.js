@@ -116,9 +116,9 @@ function Checkout() {
         <>
             {!product.length && <Navigate to="/"></Navigate>}
             {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
                 <div className="lg:col-span-3">
-                    <form className='bg-white  mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-[1.5rem] py-6' noValidate onSubmit={handleSubmit(onSubmit)}>
+                    <form className='bg-white  mx-auto  px-4 sm:px-6 lg:px-8 my-[1.5rem] py-6' noValidate onSubmit={handleSubmit(onSubmit)}>
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
