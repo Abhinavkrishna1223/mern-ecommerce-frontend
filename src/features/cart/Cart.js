@@ -34,9 +34,9 @@ export function Cart() {
 
 
   return (
-    <>
-      {cartProduct?.length ? <div className=' mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white'>
-        <h1 className='flex justify-between font-bold text-center text-[2rem] border-2 mt-4 border-zinc-950 bg-cyan-300'>Cart <ShoppingCartIcon className="h-10 w-10" aria-hidden="true" /> </h1>
+    <div className='w-full m-0 h-[100vh]'>
+      {cartProduct?.length ? <div className=' mx-auto w-full px-4 sm:px-6 lg:px-8 bg-white'>
+        <h1 className='flex justify-between font-bold text-center text-[2rem] border-2  border-zinc-950 bg-cyan-300'>Cart <ShoppingCartIcon className="h-10 w-10" aria-hidden="true" /> </h1>
         <div className="mt-8">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -122,6 +122,6 @@ export function Cart() {
           </div>
         </div>
       </div> : navigate('/')}
-    </>
+    </div>
   );
 }

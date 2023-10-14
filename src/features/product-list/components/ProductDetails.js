@@ -64,7 +64,7 @@ export default function ProductDetails() {
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
-            <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <ol className="mx-auto flex items-center space-x-2 px-4 sm:px-6 lg:px-8">
               {/* {product.breadcrumbs &&
                 product.breadcrumbs.map((breadcrumb) => (
                   <li key={breadcrumb.id}>
@@ -101,7 +101,7 @@ export default function ProductDetails() {
           </nav>
 
           {/* Image gallery */}
-          <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+          <div className="mx-auto mt-6  sm:px-6 lg:grid  lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
               <img
                 src={product.images[0]}
@@ -135,7 +135,7 @@ export default function ProductDetails() {
           </div>
 
           {/* Product info */}
-          <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+          <div className="mx-auto px-4 pb-16 pt-10 sm:px-6 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                 {product.title}
