@@ -5,12 +5,14 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom';
-import { fetchAllBrandsAsync, fetchAllCategoriesAsync,fetchProductsByFilterAsync } from '../productListSlice';
+import { fetchAllBrandsAsync, fetchAllCategoriesAsync, fetchProductsByFilterAsync } from '../productListSlice';
 import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
 import { fetchLoggedUserInfoAsync } from '../../user/userSlice';
 import { selectUserChecked } from '../../auth/authSlice';
-import { Paper, Typography } from '@mui/material';
+import { InputBase, Paper, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha } from '@mui/material/styles';
 
 
 
@@ -41,7 +43,7 @@ export default function ProductList() {
 
 
 
-  const user = useSelector((state)=> state.auth.logUser);
+  const user = useSelector((state) => state.auth.logUser);
   console.log(user, "user");
   console.log(user?.id, "Id-user productPage");
 
@@ -137,22 +139,77 @@ export default function ProductList() {
     }
   }, [])
 
+  // Search Icon-styling MUI //
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white,1),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white,1),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch', 
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
+
+  // Search Icon-styling MUI //
 
 
   return (
     <div>
-      
+
       <Paper elevation={14} className="bg-white w-full">
         <div>
           {/* Mobile filter dialog */}
 
           <MobileFilter mobileFiltersOpen={mobileFiltersOpen} setMobileFiltersOpen={setMobileFiltersOpen} handleFilter={handleFilter} filters={filters} />
 
-          <main className="mx-auto w-full px-4 sm:px-6 lg:px-8" style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg)", backgroundRepeat:"no-repeat", backgroundSize:"cover", boxShadow:"7px -4px 35px 7px"}}>
+          <main className="mx-auto w-full px-4 sm:px-6 lg:px-8" style={{ background: "url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "cover", boxShadow: "7px -4px 35px 7px" }}>
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Products</h1>
 
               <div className="flex items-center">
+                <div className='mr-4'>
+                  <Search>
+                    <SearchIconWrapper>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                      placeholder="Search…"
+                      inputProps={{ 'aria-label': 'search' }}
+                    />
+                  </Search>
+                </div>
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
                     <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -469,7 +526,7 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
 function ProductGrid({ products }) {
   return (
     <div>
-      <div style={{background:"linear-gradient(to bottom right, #b19cee, #FFDDE1)"}} >
+      <div style={{ background: "linear-gradient(to bottom right, #b19cee, #FFDDE1)" }} >
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Products</h2>
 
@@ -479,36 +536,36 @@ function ProductGrid({ products }) {
                 <Link to={`/product-details/${product.id}`} key={index}>
                   <div key={index}>
                     <Paper elevation={8} className='group relative  p-2 lg:h-[350px]'>
-                    <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
-                      <img
-                        src={product.thumbnail}
-                        alt={product.title}
-                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                      />
-                    </div>
-                    <div className="mt-4 flex justify-between">
-                      <div>
-                        <h3 className="text-sm text-gray-700">
-                          <a href={product.href}>
-                            <span aria-hidden="true" className="absolute inset-0" />
-                           <Typography variant='subtitle1'>{product.title}</Typography> 
-                          </a>
-                        </h3>
+                      <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
+                        <img
+                          src={product.thumbnail}
+                          alt={product.title}
+                          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        />
+                      </div>
+                      <div className="mt-4 flex justify-between">
+                        <div>
+                          <h3 className="text-sm text-gray-700">
+                            <a href={product.href}>
+                              <span aria-hidden="true" className="absolute inset-0" />
+                              <Typography variant='subtitle1'>{product.title}</Typography>
+                            </a>
+                          </h3>
 
-                        <p className="mt-1 text-sm text-gray-500 ">
-                          <StarIcon className='w-6 h-6 inline fill-yellow-300 '></StarIcon>
-                          <span className='align-bottom'> {product.rating} </span>
-                        </p>
+                          <p className="mt-1 text-sm text-gray-500 ">
+                            <StarIcon className='w-6 h-6 inline fill-yellow-300 '></StarIcon>
+                            <span className='align-bottom'> {product.rating} </span>
+                          </p>
+
+                        </div>
+
+                        <div className="flex flex-col">
+                          <p className="text-sm font-medium text-gray-900">${product.price}</p>
+
+                          <p className="text-sm font-medium text-gray-900">${Math.round(product.price * (1 - product.discountPercentage / 100))}</p>
+                        </div>
 
                       </div>
-
-                      <div className="flex flex-col">
-                        <p className="text-sm font-medium text-gray-900">${product.price}</p>
-
-                        <p className="text-sm font-medium text-gray-900">${Math.round(product.price * (1 - product.discountPercentage / 100))}</p>
-                      </div>
-
-                    </div>
                     </Paper>
                   </div>
                 </Link>
