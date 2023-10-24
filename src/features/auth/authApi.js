@@ -87,11 +87,6 @@ export function checkAuth() {
     } catch (error) {
       reject({ error })
     }
-
-
   }
   );
 }
-
-
-

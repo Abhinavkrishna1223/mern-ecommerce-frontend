@@ -10,4 +10,4 @@ function UserOrderPage() {
   )
 }
 
-export default UserOrderPage
+export default UserOrderPage;
