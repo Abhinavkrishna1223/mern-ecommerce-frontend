@@ -479,7 +479,7 @@ function ProductGrid({ products }) {
                 <Link to={`/product-details/${product.id}`} key={index}>
                   <div key={index}>
                     <Paper elevation={8} className='group relative  p-2 lg:h-[350px]'>
-                    <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
+                    <div className=" min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                       <img
                         src={product.thumbnail}
                         alt={product.title}

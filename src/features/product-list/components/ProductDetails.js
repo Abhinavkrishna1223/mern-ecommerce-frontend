@@ -6,6 +6,7 @@ import { fetchProductByIdAsync } from '../productListSlice'
 import { useParams } from 'react-router-dom'
 import { addToCartAsync } from '../../cart/cartSlice'
 import { selectUserInfo } from '../../user/userSlice'
+import { Rating } from '@mui/material'
 
 
 const colors = [
@@ -157,18 +158,7 @@ export default function ProductDetails() {
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <StarIcon
-                        key={rating}
-                        className={classNames(
-                          product.rating > rating
-                            ? 'text-gray-900'
-                            : 'text-gray-200',
-                          'h-5 w-5 flex-shrink-0'
-                        )}
-                        aria-hidden="true"
-                      />
-                    ))}
+                   <Rating name='read-ony' value={product?.rating} readOnly precision={0.5} />
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
                 </div>
