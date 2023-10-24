@@ -3,6 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Button } from '@mui/material'
+
 
 
 const user = {
@@ -21,7 +23,6 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', link: '/' },
   { name: 'My Orders', link: '/orders' },
-  { name: 'Sign out', link: '/login' },
 ]
 
 function classNames(...classes) {
@@ -32,12 +33,16 @@ export default function Navbar({ children }) {
 
   const items = useSelector((state) => state.cart.items);
 
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    window.location.href='/login';
+  }
+  
 
   return (
     <>
-
       <div className="min-h-full">
-        <Disclosure as="nav" style={{background:"linear-gradient(to bottom right, #0021ff, #38e5ff)"}}>
+        <Disclosure as="nav" style={{ background: "linear-gradient(to bottom right, #0021ff, #38e5ff)" }}>
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -75,7 +80,7 @@ export default function Navbar({ children }) {
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
 
-                      <Link to={items.length ?'/cart':'/'}>
+                      <Link to={items.length ? '/cart' : '/'}>
                         <button
                           type="button"
                           className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -127,6 +132,14 @@ export default function Navbar({ children }) {
                           </Menu.Items>
                         </Transition>
                       </Menu>
+                      <Button 
+                      onClick={handleSignOut}
+                       style={{
+                        background: " #833b7d",
+                        marginLeft: "12px"
+                      }} variant={'contained'}>
+                        Logout
+                      </Button>
                     </div>
                   </div>
                   <div className="-mr-2 flex md:hidden">
@@ -170,7 +183,7 @@ export default function Navbar({ children }) {
                       <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
                     </div>
 
-                    <Link to={items.length ?'/cart':'/'}>
+                    <Link to={items.length ? '/cart' : '/'}>
                       <button
                         type="button"
                         className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -200,12 +213,20 @@ export default function Navbar({ children }) {
                       </Disclosure.Button>
                     ))}
                   </div>
+                  <Button
+                  onClick={handleSignOut}
+                   style={{
+                        background: " #833b7d",
+                        marginLeft: "12px"
+                      }} variant={'contained'}>
+                        Logout
+                      </Button> 
                 </div>
               </Disclosure.Panel>
             </>
           )}
         </Disclosure>
-        <main style={{background:"url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg) no-repeat", backgroundSize:"cover"}}>
+        <main style={{ background: "url(https://png.pngtree.com/background/20230716/original/pngtree-background-of-3d-rendered-payment-methods-for-online-shopping-picture-image_4237233.jpg) no-repeat", backgroundSize: "cover" }}>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>

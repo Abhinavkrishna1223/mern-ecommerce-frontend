@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { checkAuth, createUser, loginUser, updateUser } from './authApi';
+import { checkAuth, createUser, loginUser } from './authApi';
 
 
 const initialState = {
@@ -42,6 +42,7 @@ export const checkAuthUserAsync = createAsyncThunk(
     }
   }
 );
+
 
 
 
