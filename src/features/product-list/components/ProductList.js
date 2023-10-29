@@ -10,9 +10,8 @@ import { ITEMS_PER_PAGE } from '../../../app/constants';
 import { fetchCartByUserIdAsync } from '../../cart/cartSlice';
 import { fetchLoggedUserInfoAsync } from '../../user/userSlice';
 import { selectUserChecked } from '../../auth/authSlice';
-import { InputBase, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
 
 
 
@@ -139,51 +138,22 @@ export default function ProductList() {
     }
   }, [])
 
-  // Search Icon-styling MUI //
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white,1),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white,1),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch', 
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
-  }));
+  const [searchtitle, setSearchtitle] = useState("");
+  const [show, setShow] = useState(false);
 
-  // Search Icon-styling MUI //
 
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchtitle(e.target.value.toLowerCase())
+  }
+
+  console.log(searchtitle, "searchTitle");
+
+  const openInput=()=>{
+    setShow(!show)
+  }
 
   return (
     <div>
@@ -199,16 +169,9 @@ export default function ProductList() {
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Products</h1>
 
               <div className="flex items-center">
-                <div className='mr-4'>
-                  <Search>
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search…"
-                      inputProps={{ 'aria-label': 'search' }}
-                    />
-                  </Search>
+                <div className='mr-4 flex items-center'>
+                  <SearchIcon onClick={openInput} />
+                  <input type="text" onChange={handleSearchChange} placeholder='Search Products...'  style={show?{display:"block", borderRadius:"40px"}:{display:"none"}} />
                 </div>
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
@@ -281,7 +244,7 @@ export default function ProductList() {
 
                 {/* Product grid */}
                 {products.length ? (<div className="lg:col-span-3">
-                  <ProductGrid products={products} />
+                  <ProductGrid products={products} searchtitle={searchtitle} />
                 </div>) : (<h1>Loading...</h1>)}
 
               </div>
@@ -523,7 +486,7 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
   )
 }
 
-function ProductGrid({ products }) {
+function ProductGrid({ products, searchtitle }) {
   return (
     <div>
       <div style={{ background: "linear-gradient(to bottom right, #b19cee, #FFDDE1)" }} >
@@ -531,7 +494,15 @@ function ProductGrid({ products }) {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Products</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {products.map((product, index) => (
+            {products?.filter((product) => {
+              if (searchtitle === "") {
+                return product; // Return true if there's no search title
+              } else if (
+                product?.title?.toLowerCase().includes(searchtitle)
+              ) {
+                return product; // Return true if the product title matches the search
+              }
+            }).map((product, index) => (
               <>
                 <Link to={`/product-details/${product.id}`} key={index}>
                   <div key={index}>
