@@ -112,14 +112,30 @@ export default function ProductList() {
     console.log({ NoOfPages })
   }
 
+  
+
+  const [searchtitle, setSearchtitle] = useState("");
+  const [show, setShow] = useState(false);
+
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    const searchQuery = { title: e.target.value};
+    setSearchtitle(searchQuery)
+  }
+
+  const openInput=()=>{
+    setShow(!show)
+  }
+
 
   useEffect(() => {
-
+    console.log(searchtitle, "searchTitle");
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
 
-    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
+    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination, searchtitle }));
 
-  }, [dispatch, filter, sort, page])
+  }, [dispatch, filter, sort, page, searchtitle])
 
 
   // This useEffect is use to redirect the page to 1st page whenever actions triggered for TOTALITEMS and SORT //
@@ -140,21 +156,6 @@ export default function ProductList() {
 
 
 
-  const [searchtitle, setSearchtitle] = useState("");
-  const [show, setShow] = useState(false);
-
-
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setSearchtitle(e.target.value.toLowerCase())
-  }
-
-  console.log(searchtitle, "searchTitle");
-
-  const openInput=()=>{
-    setShow(!show)
-  }
-
   return (
     <div>
 
@@ -170,7 +171,7 @@ export default function ProductList() {
 
               <div className="flex items-center">
                 <div className='mr-4 flex items-center'>
-                  <SearchIcon onClick={openInput} />
+                  <SearchIcon onClick={openInput} className='cursor-pointer' />
                   <input type="text" onChange={handleSearchChange} placeholder='Search Products...'  style={show?{display:"block", borderRadius:"40px"}:{display:"none"}} />
                 </div>
                 <Menu as="div" className="relative inline-block text-left">
@@ -494,15 +495,7 @@ function ProductGrid({ products, searchtitle }) {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Products</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {products?.filter((product) => {
-              if (searchtitle === "") {
-                return product; // Return true if there's no search title
-              } else if (
-                product?.title?.toLowerCase().includes(searchtitle)
-              ) {
-                return product; // Return true if the product title matches the search
-              }
-            }).map((product, index) => (
+            {products?.map((product, index) => (
               <>
                 <Link to={`/product-details/${product.id}`} key={index}>
                   <div key={index}>
@@ -550,3 +543,12 @@ function ProductGrid({ products, searchtitle }) {
   )
 }
 
+// .filter((product) => {
+//   if (searchtitle === "") {
+//     return product; // Return true if there's no search title
+//   } else if (
+//     product?.title?.toLowerCase().includes(searchtitle)
+//   ) {
+//     return product; // Return true if the product title matches the search
+//   }
+// })
