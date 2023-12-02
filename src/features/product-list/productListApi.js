@@ -16,12 +16,7 @@ export function fetchProductById(id) {
 
 
 //Filtering in Product List //
-export function fetchProductsByFilter({filter, sort, pagination}) {
-
-  // pagination = {_page:1, _limit=10 }
-
-  //TODO: on server have to make multi-value data rendering //
-
+export function fetchProductsByFilter({filter, sort, pagination, searchtitle}) {
 
   let queryString = '';
   
@@ -42,13 +37,18 @@ export function fetchProductsByFilter({filter, sort, pagination}) {
     queryString +=`${key}=${pagination[key]}&`
   }
 
+  for (let key in searchtitle){
+    queryString +=`${key}=${searchtitle[key]}&`
+  }
+
   return new Promise(async(resolve) => {
+    console.log('http://localhost:8080/products?'+ queryString,"<<<<<<<<<<<<<<<")
     const response = await fetch('http://localhost:8080/products?'+ queryString,{
       headers:{
         "Authorization":`Bearer ${localStorage.getItem('token')}`
       }
     })
-    const data = await response.json();
+    const data = await response?.json();
     const totalItems = response.headers.get('X-Total-Count')
 
     resolve({data:{products:data, totalItems:+totalItems}})
@@ -77,9 +77,6 @@ export function fetchAllBrands() {
       }
     })
     const data = await response.json();
-
-    console.log(data, 'Brands')
-
     resolve({data})
   })
 }
