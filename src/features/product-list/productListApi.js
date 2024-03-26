@@ -42,7 +42,6 @@ export function fetchProductsByFilter({filter, sort, pagination, searchtitle}) {
   }
 
   return new Promise(async(resolve) => {
-    console.log('http://localhost:8080/products?'+ queryString,"<<<<<<<<<<<<<<<")
     const response = await fetch('http://localhost:8080/products?'+ queryString,{
       headers:{
         "Authorization":`Bearer ${localStorage.getItem('token')}`

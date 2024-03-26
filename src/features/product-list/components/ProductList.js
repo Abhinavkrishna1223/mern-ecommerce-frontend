@@ -132,10 +132,8 @@ export default function ProductList() {
   useEffect(() => {
     console.log(searchtitle, "searchTitle");
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination, searchtitle }));
-
-  }, [dispatch, filter, sort, page, searchtitle])
+  }, [dispatch, filter, sort, page, searchtitle]);
 
 
   // This useEffect is use to redirect the page to 1st page whenever actions triggered for TOTALITEMS and SORT //
