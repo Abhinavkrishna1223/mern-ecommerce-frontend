@@ -10,7 +10,7 @@ export function createUser(userData) {
 
       if (response.ok) { //  (response.ok) --> this checks the server status is 200 or not //
         const data = await response.json();
-        localStorage.setItem('token',data)
+        localStorage.setItem('token',data?.token)
         resolve({ data })
 
       }
