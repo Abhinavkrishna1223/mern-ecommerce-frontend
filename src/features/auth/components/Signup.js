@@ -39,7 +39,7 @@ function Signup() {
 
   const onSubmit = (data) => {
 
-    const userData = { email: data.email, password: data.password }
+    const userData = { email: data.email, password: data.password, role:'user' }
 
     dispatch(createUserAsync(userData))
     console.log(userData, "signUpData")
