@@ -21,10 +21,6 @@ const sortOptions = [
   { name: 'Price: High to Low', sort: 'price', order: 'desc', current: false },
 ]
 
-
-
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -524,7 +520,7 @@ function ProductGrid({ products, searchtitle }) {
                         </div>
 
                         <div className="flex flex-col">
-                          <p className="text-sm font-medium text-gray-900">${product.price}</p>
+                          <p className="text-sm font-medium text-gray-900"><del> ${product.price}</del></p>
 
                           <p className="text-sm font-medium text-gray-900">${Math.round(product.price * (1 - product.discountPercentage / 100))}</p>
                         </div>
